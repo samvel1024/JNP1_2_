@@ -85,6 +85,8 @@ operacji modyfikować dane pod uprzednio przekazanym wskaźnikiem lub zwolnić
 pamięć. Na przykład poniższy kod nie powinien przerwać się z powodu
 niespełnionej asercji:
 
+
+```
 unsigned long s;
 char buf[4] = "foo";
 s = strset_new();
@@ -92,6 +94,7 @@ strset_insert(s, buf);
 buf[0] = 'b';
 assert(strset_test(s, "foo"));
 assert(!strset_test(s, "boo"));
+```
 
 W rozwiązaniu nie należy nadużywać kompilacji warunkowej. Fragmenty tekstu
 źródłowego realizujące wyspecyfikowane operacje na zbiorach nie powinny zależeć
