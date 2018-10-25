@@ -1,0 +1,7 @@
+*
+!.gitignore
+!build.sh
+!main.c
+!main.cc
+!strset.cc
+!strset.h
