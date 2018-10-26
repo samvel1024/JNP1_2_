@@ -4,11 +4,18 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
-#include <optional>
+#include <experimental/optional>
 
 
 using set_id = unsigned long;
-const bool debug = true;
+
+namespace {
+    std::unordered_map<set_id, std::set<std::string> > sets;
+    set_id id = 0;
+    bool is_immutable_present = false;
+    const bool debug = true;
+    set_id immutable_set_id = 0;
+}
 
 void log_debug(const std::string &msg) {
     std::cerr << msg << std::endl;
@@ -28,13 +35,6 @@ void log(const std::string &msg){
     }
 }
 
-namespace {
-    std::unordered_map<set_id, std::set<std::string> > sets;
-    set_id id = 0;
-    bool is_immutable_present = false;
-    set_id immutable_set_id = 0;
-}
-
 
 bool is_immutable(set_id id) {
     if (is_immutable_present && immutable_set_id == id) {
@@ -44,8 +44,8 @@ bool is_immutable(set_id id) {
     return false;
 }
 
-std::optional<std::set<std::string>> get_by_id(set_id id){
-    if (sets.count(id) == 0) return std::nullopt;
+std::experimental::optional<std::set<std::string>> get_by_id(set_id id){
+    if (sets.count(id) == 0) return std::experimental::nullopt;
     return {sets[id]};
 }
 
@@ -128,6 +128,9 @@ int jnp1::strset_test(set_id id, const char *value) {
 void jnp1::strset_clear(unsigned long id) {
 
     log("strset_clear()");
+
+    if (is_immutable(id))
+        return;
 
     auto it = sets.find(id);
     if(it == sets.end())
