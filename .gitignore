@@ -1,0 +1,10 @@
+*
+!build.sh
+!linking_poc
+!.gitignore
+!*.c
+!*.cc
+!*.h
+!README.md
+
+

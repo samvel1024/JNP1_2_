@@ -1,6 +1,4 @@
-//
-// Created by kacper on 22.10.18.
-//
+
 
 #ifndef JNP2_STRSETCONST_H
 #define JNP2_STRSETCONST_H
