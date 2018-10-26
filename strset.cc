@@ -28,8 +28,13 @@ void log(std::string msg) {
 namespace {
     std::unordered_map<unsigned long, std::set<std::string> > sets;
     unsigned long id = 0;
+    int immutable_set_id = -1;
+}
+
+void add_immutable_set(){
 
 }
+
 
 unsigned long jnp1::strset_new() {
     log("strset_new()");
