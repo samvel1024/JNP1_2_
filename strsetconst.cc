@@ -1,7 +1,3 @@
-//
-// Created by kacper on 22.10.18.
-//
-
 #include "strsetconst.h"
 #include "strset.h"
 
