@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
+#include <optional>
 
 
 using set_id = unsigned long;
@@ -37,10 +38,15 @@ namespace {
 
 bool is_immutable(set_id id) {
     if (is_immutable_present && immutable_set_id == id) {
-        log("is_not_immutable(" + std::to_string(id) + "): cannot perform modifications to the immutable set");
+        log("is_immutable(" + std::to_string(id) + "): cannot perform modifications to the immutable set");
         return true;
     }
     return false;
+}
+
+std::optional<std::set<std::string>> get_by_id(set_id id){
+    if (sets.count(id) == 0) return std::nullopt;
+    return {sets[id]};
 }
 
 set_id jnp1::strset_new() {
@@ -120,6 +126,7 @@ int jnp1::strset_test(set_id id, const char *value) {
 }
 
 void jnp1::strset_clear(unsigned long id) {
+
     log("strset_clear()");
 
     auto it = sets.find(id);
@@ -130,12 +137,14 @@ void jnp1::strset_clear(unsigned long id) {
         log("strset_test: set" + std::to_string(id) + " cleared");
         it -> second.clear();
     }
+
 }
 
 
 int jnp1::strset_comp(set_id id1, set_id id2) {
-    //TODO soon
-    return 0;
+    auto s1 = get_by_id(id1);
+    auto s2 = get_by_id(id2);
+    return s1 < s2 ? -1 : s1 == s2 ? 0 : 1;
 }
 
 set_id set_immutable_singleton(const char *value) {
