@@ -17,6 +17,8 @@ namespace jnp1 {
     extern void strset_remove(unsigned long id, const char *value);
     extern void strset_clear(unsigned long id);
     extern int strset_test(unsigned long id, const char *value);
+    extern int strset_comp(unsigned long id1, unsigned long id2);
+
 #ifdef __cplusplus
     }
 }
