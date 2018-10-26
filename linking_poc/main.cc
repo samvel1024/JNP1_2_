@@ -1,5 +1,6 @@
 
 #include "strset.h"
+#include "hidden.h"
 #include <iostream>
 
 int main() {
