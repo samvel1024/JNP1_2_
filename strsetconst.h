@@ -1,7 +1,17 @@
-#ifndef _STRSET_CONST_H_
-#define _STRSET_CONST_H_
-
-unsigned long strset42();
 
 
+#ifndef JNP2_STRSETCONST_H
+#define JNP2_STRSETCONST_H
+
+#ifdef __cplusplus
+namespace jnp1
+{
+    extern "C"
+    {
 #endif
+        extern unsigned long strset42();
+#ifdef __cplusplus
+    }
+}
+#endif
+#endif //JNP2_STRSETCONST_H
