@@ -19,7 +19,12 @@ namespace {
         static auto *mysets = new std::unordered_map<set_id, std::set<std::string> >();
         return *mysets;
     }
+
+    static void init_stdio() {
+        static auto init = std::ios_base::Init();
+    }
 }
+
 
 void log_debug(const std::string &msg) {
     std::cerr << msg << std::endl;
@@ -32,6 +37,7 @@ void log_prod(const std::string &msg) {
 void log(const std::string &msg);
 
 void log(const std::string &msg) {
+    init_stdio();
     if (debug) {
         log_debug(msg);
     } else {
@@ -85,9 +91,13 @@ void jnp1::strset_delete(set_id id) {
 
 void jnp1::strset_insert(set_id id, const char *value) {
     log("strset_insert()");
-    if (is_immutable(id))
+    if (is_immutable(id)) {
         return;
-
+    }
+    if (value == nullptr) {
+        log("strste_insert: value cannot be null");
+        return;
+    }
     auto it = sets().find(id);
     if (it != sets().end()) {
         it->second.insert(value);
