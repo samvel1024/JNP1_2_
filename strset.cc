@@ -19,7 +19,12 @@ namespace {
         static auto *mysets = new std::unordered_map<set_id, std::set<std::string> >();
         return *mysets;
     }
+
+    static void init_stdio() {
+        static auto init = std::ios_base::Init();
+    }
 }
+
 
 void log_debug(const std::string &msg) {
     std::cerr << msg << std::endl;
@@ -32,6 +37,7 @@ void log_prod(const std::string &msg) {
 void log(const std::string &msg);
 
 void log(const std::string &msg) {
+    init_stdio();
     if (debug) {
         log_debug(msg);
     } else {
@@ -50,7 +56,9 @@ bool is_immutable(set_id id) {
 }
 
 std::experimental::optional<std::set<std::string>> get_by_id(set_id id) {
-    if (sets().count(id) == 0) return std::experimental::nullopt;
+    if (sets().count(id) == 0) {
+        return std::experimental::nullopt;
+    }
     return {sets()[id]};
 }
 
@@ -76,8 +84,9 @@ size_t jnp1::strset_size(set_id id) {
 
 void jnp1::strset_delete(set_id id) {
     log("strset_delete()");
-    if (is_immutable(id))
+    if (is_immutable(id)) {
         return;
+    }
 
     sets().erase(id);
     log("strset_delete: set" + std::to_string(id) + " removed");
@@ -85,9 +94,13 @@ void jnp1::strset_delete(set_id id) {
 
 void jnp1::strset_insert(set_id id, const char *value) {
     log("strset_insert()");
-    if (is_immutable(id))
+    if (is_immutable(id)) {
         return;
-
+    }
+    if (value == nullptr) {
+        log("strste_insert: value cannot be null");
+        return;
+    }
     auto it = sets().find(id);
     if (it != sets().end()) {
         it->second.insert(value);
@@ -134,8 +147,9 @@ void jnp1::strset_clear(unsigned long id) {
 
     log("strset_clear()");
 
-    if (is_immutable(id))
+    if (is_immutable(id)) {
         return;
+    }
 
     auto it = sets().find(id);
     if (it == sets().end()) {
