@@ -6,6 +6,11 @@
 #include <set>
 #include <experimental/optional>
 
+#ifdef NDEBUG
+#define LOG(msg)
+#else
+#define LOG(msg) std::cerr<<msg<<std::endl;
+#endif
 
 using set_id = unsigned long;
 
@@ -14,11 +19,6 @@ namespace {
     bool is_immutable_present = false;
     set_id immutable_set_id = 0;
 
-#ifdef NDEBUG
-#define LOG(msg)
-#else
-#define LOG(msg) log_debug(msg)
-#endif
     
     //Initialize global variable
     static auto &sets() {
@@ -26,10 +26,6 @@ namespace {
         return *mysets;
     }
 
-}
-
-void log_debug(const std::string &msg) {
-    std::cerr << msg << std::endl;
 }
 
 //Check if immutalbe set already exists

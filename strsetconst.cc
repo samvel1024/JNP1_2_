@@ -1,13 +1,12 @@
 #include "strsetconst.h"
 #include "strset.h"
 
-void log_debug(const std::string &msg);
 unsigned long set_immutable_singleton(const char *str);
 
 #ifdef NDEBUG
 #define LOG(msg)
 #else
-#define LOG(msg) log_debug(msg)
+#define LOG(msg) std::cerr<<msg<<std::endl;
 #endif
 
 
