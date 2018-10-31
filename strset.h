@@ -1,10 +1,11 @@
 #ifndef JNP2_STRSET_H
 #define JNP2_STRSET_H
 
-#include "stdio.h"
+#include "stddef.h"
 
 #ifdef __cplusplus
 
+#include <iostream>
 namespace jnp1 {
 
     extern "C"
